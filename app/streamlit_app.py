@@ -92,11 +92,11 @@ def build_inputs(df: pd.DataFrame, cols_list: list[str], key_prefix: str) -> dic
     return values
 
 
-# --- load data ---
+
 df_raw = load_data_cached()
 df = preprocess_for_ui(df_raw)
 
-# feature columns for default UI (если meta нет)
+
 feature_cols_fallback = [c for c in df.columns if c not in TARGET_COLS and c != RECOMMEND_TARGET]
 feature_cols_fallback = df[feature_cols_fallback].select_dtypes(include="number").columns.tolist()
 
