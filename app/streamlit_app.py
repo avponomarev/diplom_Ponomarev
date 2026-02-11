@@ -16,8 +16,8 @@ from src.preprocessing import OutlierProcessor, TARGET_COLS, RECOMMEND_TARGET
 
 
 try:
-    from src.recommender_nn import load_recommender  # type: ignore
-except Exception:  # noqa
+    from src.recommender_nn import load_recommender  
+except Exception:  
     load_recommender = None
 
 
