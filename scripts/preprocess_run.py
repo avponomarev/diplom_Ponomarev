@@ -21,10 +21,7 @@ TAB_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def sanitize_filename(name: str) -> str:
-    """
-    Делает имя безопасным для сохранения файлов:
-    убирает / \\ : * ? " < > | и заменяет пробелы/запятые на _
-    """
+
     name = name.strip()
     name = re.sub(r"[\/\\\:\*\?\"<>\|]", "_", name)
     name = re.sub(r"[,\s]+", "_", name)
