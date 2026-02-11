@@ -218,7 +218,7 @@ with tab2:
  
             cols_rec = list(x_rec.columns)
 
-        # кнопка расчёта
+        # кнопка расчета
         if st.button("Рекомендовать соотношение матрица–наполнитель", type="primary"):
             try:
                 X_in = x_rec[cols_rec].values
