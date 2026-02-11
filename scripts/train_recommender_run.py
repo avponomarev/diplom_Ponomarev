@@ -22,7 +22,7 @@ def main() -> None:
 
     result = train_recommender(df, str(model_path), str(scaler_path))
 
-    print("✅ Recommender training complete.")
+    print("Recommender training complete.")
     print("Result:", result)
 
 
