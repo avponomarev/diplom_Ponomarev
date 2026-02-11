@@ -146,7 +146,7 @@ with tab1:
     if st.button("Сделать прогноз", type="primary"):
         try:
             pred = np.asarray(model.predict(X)).reshape(1, -1)
-            st.markdown("### ✅Результат прогноза")
+            st.markdown("### Результат прогноза")
             st.metric("Модуль упругости при растяжении, ГПа", f"{pred[0, 0]:.3f}")
             st.metric("Прочность при растяжении, МПа", f"{pred[0, 1]:.3f}")
         except Exception as e:
@@ -225,7 +225,7 @@ with tab2:
                 X_in = x_rec[cols_rec].values
                 Xs = scaler_rec.transform(X_in)
                 y_pred = float(np.asarray(model_rec.predict(Xs)).reshape(-1)[0])
-                st.success(f"✅Рекомендуемое соотношение матрица–наполнитель: **{y_pred:.4f}**")
+                st.success(f"Рекомендуемое соотношение матрица–наполнитель: **{y_pred:.4f}**")
             except Exception as e:
                 st.error(f"Ошибка при расчёте рекомендации: {e}")
 
