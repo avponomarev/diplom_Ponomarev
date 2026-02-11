@@ -14,8 +14,7 @@ if str(BASE) not in sys.path:
 from src.data_loader import load_and_merge
 from src.preprocessing import OutlierProcessor, TARGET_COLS, RECOMMEND_TARGET
 
-# Если у тебя в src/recommender_nn.py есть load_recommender — используем.
-# Если нет — загрузим модель/скейлер напрямую.
+
 try:
     from src.recommender_nn import load_recommender  # type: ignore
 except Exception:  # noqa
@@ -52,14 +51,13 @@ def load_json(path: Path):
 
 @st.cache_data
 def load_data_cached() -> pd.DataFrame:
-    # load_and_merge у тебя работает и с str, и с Path; оставляем Path
+
     return load_and_merge(DATA_BP, DATA_NUP)
 
 
 @st.cache_data
 def preprocess_for_ui(df_raw: pd.DataFrame) -> pd.DataFrame:
-    # Для GUI делаем мягкую обработку выбросов (winsorize) только по фичам.
-    # Таргеты исключаем, чтобы их не клипать.
+
     op = OutlierProcessor(k=1.5, exclude_cols=list(TARGET_COLS) + [RECOMMEND_TARGET])
     res = op.winsorize_iqr(df_raw)
     return res.df
@@ -72,19 +70,19 @@ def build_inputs(df: pd.DataFrame, cols_list: list[str], key_prefix: str) -> dic
         c = ui_cols[i % 3]
 
         if col not in df.columns:
-            # если meta содержит колонку, которой нет в df — всё равно дадим ввести
+
             values[col] = c.number_input(col, value=0.0, format="%.6f", key=f"{key_prefix}_{col}")
             continue
 
         series = df[col]
         if not pd.api.types.is_numeric_dtype(series):
-            # Нечисловые — пропускаем (или можно сделать selectbox, но у тебя датасет числовой)
+ 
             continue
 
         mn, mx = float(series.min()), float(series.max())
         default = float(series.median())
 
-        # Streamlit иногда ругается, если min==max — тогда убираем ограничения
+
         if mn == mx:
             values[col] = c.number_input(col, value=default, format="%.6f", key=f"{key_prefix}_{col}")
         else:
@@ -111,7 +109,7 @@ tab1, tab2 = st.tabs(["Прогноз (E и σ)", "Рекомендация со
 with tab1:
     st.subheader("Ввод параметров материала")
 
-    # Загружаем meta, чтобы гарантировать порядок признаков
+ 
     meta = load_json(MODEL_META_PATH) if MODEL_META_PATH.exists() else None
     if meta and isinstance(meta, dict) and isinstance(meta.get("feature_cols"), list):
         feature_cols = list(meta["feature_cols"])
@@ -148,7 +146,7 @@ with tab1:
     if st.button("Сделать прогноз", type="primary"):
         try:
             pred = np.asarray(model.predict(X)).reshape(1, -1)
-            st.markdown("### ✅ Результат прогноза")
+            st.markdown("### ✅Результат прогноза")
             st.metric("Модуль упругости при растяжении, ГПа", f"{pred[0, 0]:.3f}")
             st.metric("Прочность при растяжении, МПа", f"{pred[0, 1]:.3f}")
         except Exception as e:
@@ -218,7 +216,7 @@ with tab2:
             if err1 or err2:
                 st.error(f"Ошибка загрузки рекомендателя: {err1 or ''} {err2 or ''}".strip())
                 st.stop()
-            # В этом фолбэке считаем, что рекомендатель обучался на тех же колонках
+ 
             cols_rec = list(x_rec.columns)
 
         # кнопка расчёта
@@ -227,7 +225,7 @@ with tab2:
                 X_in = x_rec[cols_rec].values
                 Xs = scaler_rec.transform(X_in)
                 y_pred = float(np.asarray(model_rec.predict(Xs)).reshape(-1)[0])
-                st.success(f"✅ Рекомендуемое соотношение матрица–наполнитель: **{y_pred:.4f}**")
+                st.success(f"✅Рекомендуемое соотношение матрица–наполнитель: **{y_pred:.4f}**")
             except Exception as e:
                 st.error(f"Ошибка при расчёте рекомендации: {e}")
 
