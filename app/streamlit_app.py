@@ -163,12 +163,11 @@ with tab2:
     target_E = c1.number_input("Желаемый модуль упругости (ГПа)", value=float(df[TARGET_COLS[0]].median()))
     target_sigma = c2.number_input("Желаемая прочность (МПа)", value=float(df[TARGET_COLS[1]].median()))
 
-    # Колонки для входа рекомендателя: все числовые, кроме таргета рекомендателя
-    # (а целевые E/sigma мы будем подставлять из полей выше)
+
     rec_input_cols = [c for c in df.columns if c != RECOMMEND_TARGET]
     rec_input_cols = df[rec_input_cols].select_dtypes(include="number").columns.tolist()
 
-    # Построим ввод
+
     ui_cols = st.columns(3)
     rec_input = {}
     for i, col in enumerate(rec_input_cols):
@@ -203,7 +202,7 @@ with tab2:
             "Сначала обучи рекомендатель отдельным скриптом."
         )
     else:
-        # Загрузка рекомендателя: либо через load_recommender, либо напрямую joblib
+
         if load_recommender is not None:
             try:
                 model_rec, scaler_rec, cols_rec = load_recommender(str(REC_MODEL_PATH), str(REC_SCALER_PATH))
