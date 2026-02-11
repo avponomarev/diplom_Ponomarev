@@ -166,7 +166,7 @@ class ModelTrainer:
     ) -> None:
         joblib.dump(best_model, best_model_path)
         meta = {"feature_cols": feature_cols}
-        PathLike = __import__("pathlib").Path  # чтобы не тащить лишний импорт сверху
+        PathLike = __import__("pathlib").Path  
         PathLike(meta_path).write_text(__import__("json").dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
