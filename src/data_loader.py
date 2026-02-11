@@ -16,11 +16,10 @@ def load_and_merge(path_bp: str | Path, path_nup: str | Path) -> pd.DataFrame:
 
     if df.empty:
         raise ValueError(
-            "После INNER-объединения по индексу датасет пустой. "
-            "Проверь, что индексы в X_bp и X_nup совпадают."
+
         )
 
     if df.index.hasnans:
-        raise ValueError("В индексе есть NaN — это недопустимо для объединения по индексу.")
+        raise ValueError("В индексе есть NaN - недопустимо для объединения по индексу.")
 
     return df
