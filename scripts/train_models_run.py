@@ -40,9 +40,9 @@ def main() -> None:
     result.metrics.to_csv(metrics_path, index=False, encoding="utf-8")
     params_path.write_text(json.dumps(result.params, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print("✅ Training models complete.")
-    print(f"✅ Best model: {result.best_name}")
-    print("✅ Saved:")
+    print("Training models complete.")
+    print("Best model: {result.best_name}")
+    print("Saved:")
     print(" -", best_model_path)
     print(" -", meta_path)
     print(" -", metrics_path)
