@@ -26,9 +26,9 @@ def sanitize_filename(name: str) -> str:
     убирает / \\ : * ? " < > | и заменяет пробелы/запятые на _
     """
     name = name.strip()
-    name = re.sub(r"[\/\\\:\*\?\"<>\|]", "_", name)   # запрещенные символы
-    name = re.sub(r"[,\s]+", "_", name)              # запятые и пробелы -> _
-    name = re.sub(r"__+", "_", name)                 # двойные подчёркивания
+    name = re.sub(r"[\/\\\:\*\?\"<>\|]", "_", name)
+    name = re.sub(r"[,\s]+", "_", name)
+    name = re.sub(r"__+", "_", name)         
     return name
 
 
