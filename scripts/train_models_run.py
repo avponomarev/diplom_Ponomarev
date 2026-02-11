@@ -41,7 +41,7 @@ def main() -> None:
     params_path.write_text(json.dumps(result.params, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print("Training models complete.")
-    print("Best model: {result.best_name}")
+    print(f"Best model: {result.best_name}")
     print("Saved:")
     print(" -", best_model_path)
     print(" -", meta_path)
